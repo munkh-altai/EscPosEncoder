@@ -1,8 +1,8 @@
 const iconv = require('iconv-lite');
 const linewrap = require('linewrap');
-const Canvas = require('canvas-browserify');
-const Dither = require('canvas-dither');
-const Flatten = require('canvas-flatten');
+// const Canvas = require('canvas-browserify');
+// const Dither = require('canvas-dither');
+// const Flatten = require('canvas-flatten');
 
 
 /**
@@ -75,6 +75,7 @@ class EscPosEncoder {
      */
     codepage(value) {
         const codepages = {
+            'cp936': 0xff, // 简体中文
             'cp437': 0x00,
             'cp737': 0x40,
             'cp850': 0x02,
@@ -143,7 +144,7 @@ class EscPosEncoder {
      */
     text(value, wrap) {
         if (wrap) {
-            let w = linewrap(wrap, {lineBreak: '\r\n'});
+            let w = linewrap(wrap, { lineBreak: '\r\n' });
             value = w(value);
         }
 
@@ -194,7 +195,7 @@ class EscPosEncoder {
      */
     underline(value) {
         if (typeof value === 'undefined') {
-            value = ! this._state.underline;
+            value = !this._state.underline;
         }
 
         this._state.underline = value;
@@ -215,7 +216,7 @@ class EscPosEncoder {
      */
     bold(value) {
         if (typeof value === 'undefined') {
-            value = ! this._state.bold;
+            value = !this._state.bold;
         }
 
         this._state.bold = value;
@@ -227,16 +228,16 @@ class EscPosEncoder {
         return this;
     }
 
-   /**
-     * Change text size
-     *
-     * @param  {string}          value   small or normal
-     * @return {object}                  Return the object, for easy chaining commands
-     *
-     */
+    /**
+      * Change text size
+      *
+      * @param  {string}          value   small or normal
+      * @return {object}                  Return the object, for easy chaining commands
+      *
+      */
     size(value) {
         if (value === 'small') {
-            value = 0x01;
+            value = 0x00;
         } else {
             value = 0x01;
         }
@@ -306,9 +307,9 @@ class EscPosEncoder {
             0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x43, 0x06,
             0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x45, 0x31,
             0x1d, 0x28, 0x6b,
-                length % 0xff, length / 0xff,
-                0x31, 0x50, 0x30,
-                bytes,
+            length % 0xff, length / 0xff,
+            0x31, 0x50, 0x30,
+            bytes,
             0x1d, 0x28, 0x6b, 0x03, 0x00, 0x31, 0x51, 0x30,
         ]);
 
@@ -327,60 +328,114 @@ class EscPosEncoder {
      *
      */
     image(element, width, height, algorithm, threshold) {
-        if (width % 8 !== 0) {
-            throw new Error('Width must be a multiple of 8');
-        }
+        console.log('Not supported for react-native')
+        return this;
+        // if (width % 8 !== 0) {
+        //     throw new Error('Width must be a multiple of 8');
+        // }
 
-        if (height % 8 !== 0) {
-            throw new Error('Height must be a multiple of 8');
-        }
+        // if (height % 8 !== 0) {
+        //     throw new Error('Height must be a multiple of 8');
+        // }
 
-        if (typeof algorithm === 'undefined') {
-            algorithm = 'threshold';
-        }
+        // if (typeof algorithm === 'undefined') {
+        //     algorithm = 'threshold';
+        // }
 
-        if (typeof threshold === 'undefined') {
-            threshold = 128;
-        }
+        // if (typeof threshold === 'undefined') {
+        //     threshold = 128;
+        // }
 
-        let canvas = new Canvas(width, height);
-        let context = canvas.getContext('2d');
-        context.drawImage(element, 0, 0, width, height);
-        let image = context.getImageData(0, 0, width, height);
+        // let canvas = new Canvas(width, height);
+        // let context = canvas.getContext('2d');
+        // context.drawImage(element, 0, 0, width, height);
+        // let image = context.getImageData(0, 0, width, height);
 
-        image = Flatten.flatten(image, [0xff, 0xff, 0xff]);
+        // image = Flatten.flatten(image, [0xff, 0xff, 0xff]);
 
-        switch (algorithm) {
-            case 'threshold': image = Dither.threshold(image, threshold); break;
-            case 'bayer': image = Dither.bayer(image, threshold); break;
-            case 'floydsteinberg': image = Dither.floydsteinberg(image); break;
-            case 'atkinson': image = Dither.atkinson(image); break;
-        }
+        // switch (algorithm) {
+        //     case 'threshold': image = Dither.threshold(image, threshold); break;
+        //     case 'bayer': image = Dither.bayer(image, threshold); break;
+        //     case 'floydsteinberg': image = Dither.floydsteinberg(image); break;
+        //     case 'atkinson': image = Dither.atkinson(image); break;
+        // }
 
-        let getPixel = (x, y) => image.data[((width * y) + x) * 4] > 0 ? 1 : 0;
+        // let getPixel = (x, y) => image.data[((width * y) + x) * 4] > 0 ? 1 : 0;
 
-        let bytes = new Uint8Array((width * height) >> 3);
+        // let bytes = new Uint8Array((width * height) >> 3);
 
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x = x + 8) {
-                let i = (y * (width >> 3)) + (x >> 3);
-                bytes[i] =
-                    getPixel(x + 0, y) << 7 |
-                    getPixel(x + 1, y) << 6 |
-                    getPixel(x + 2, y) << 5 |
-                    getPixel(x + 3, y) << 4 |
-                    getPixel(x + 4, y) << 3 |
-                    getPixel(x + 5, y) << 2 |
-                    getPixel(x + 6, y) << 1 |
-                    getPixel(x + 7, y);
-            }
-        }
+        // for (let y = 0; y < height; y++) {
+        //     for (let x = 0; x < width; x = x + 8) {
+        //         let i = (y * (width >> 3)) + (x >> 3);
+        //         bytes[i] =
+        //             getPixel(x + 0, y) << 7 |
+        //             getPixel(x + 1, y) << 6 |
+        //             getPixel(x + 2, y) << 5 |
+        //             getPixel(x + 3, y) << 4 |
+        //             getPixel(x + 4, y) << 3 |
+        //             getPixel(x + 5, y) << 2 |
+        //             getPixel(x + 6, y) << 1 |
+        //             getPixel(x + 7, y);
+        //     }
+        // }
 
+        // this._queue([
+        //     0x1d, 0x76, 0x30, 0x00,
+        //     (width >> 3) & 0xff, (((width >> 3) >> 8) & 0xff),
+        //     height & 0xff, ((height >> 8) & 0xff),
+        //     bytes,
+        // ]);
+
+        // return this;
+    }
+
+    /**
+     * Next
+     * 
+     * to next page
+     */
+    next() {
         this._queue([
-            0x1d, 0x76, 0x30, 0x00,
-            (width >> 3) & 0xff, (((width >> 3) >> 8) & 0xff),
-            height & 0xff, ((height >> 8) & 0xff),
-            bytes,
+            0x1D, 0x0C,
+        ]);
+
+        return this;
+    }
+
+    /**
+     * Left
+     * 
+     * align left
+     */
+    left() {
+        this._queue([
+            0x1B, 0x61, 0x00,
+        ]);
+
+        return this;
+    }
+
+    /**
+     * Center
+     * 
+     * align center
+     */
+    center() {
+        this._queue([
+            0x1B, 0x61, 0x01,
+        ]);
+
+        return this;
+    }
+
+    /**
+     * Right
+     * 
+     * align right
+     */
+    right() {
+        this._queue([
+            0x1B, 0x61, 0x02,
         ]);
 
         return this;

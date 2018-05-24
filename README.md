@@ -1,31 +1,32 @@
 # esc-pos-encoder
 
-Create a set of commands that can be send to any receipt printer that supports ESC/POS
+Based on [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder), add `Simplified Chinese` encode.
+基于[esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder)修改，添加了 `简体中文`编码。
 
 ## Usage
 
-First, install the package using npm:
+```shell
+    npm install @hexing/esc-pos-encoder --save
+```
 
-    npm install esc-pos-encoder --save
+```js
+let EscPosEncoder = require('esc-pos-encoder');
 
-Then, require the package and use it like so:
+let encoder = new EscPosEncoder();
 
-    let EscPosEncoder = require('esc-pos-encoder');
+let result = encoder
+    .initialize()
+    .text('The quick brown fox jumps over the lazy dog)
+    .newline()
+    .line('我是一段中文)
+    .right()
+    .qrcode('https://nielsleenheer.com')
+    .next()
+    .encode();
+```
 
-    let encoder = new EscPosEncoder();
 
-    let result = encoder
-        .initialize()
-        .text('The quick brown fox jumps over the lazy dog)
-        .newline()
-        .qrcode('https://nielsleenheer.com')
-        .encode();
-
-All commands can be chained, except for `encode()` which will return the result as an Uint8Array which contains all the bytes that need to be send to the printer.
-
-You can reuse the instantiated `EscPosEncoder` class to generate multiple commands or sets of commands for the same printer. It will remember settings like code page, so you don't have to specify that on subsequent use. That does rely on that previous commands were actually send to the printer. 
-
-The following commands are available:
+**更多用法查看原文** [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder)
 
 ### Initialize
 
@@ -169,6 +170,8 @@ Print a QR code. The first parameter is the value of the QR code.
 
 ### Image
 
+**Not supported**
+
 Print an image. The image is automatically converted to black and white and can optionally be dithered using different algorithms.
 
 The first parameter is the image itself. When running in the browser it can be any element that can be drawn onto a canvas, like an img, svg, canvas and video elements. When on Node it can be a Canvas provided by the `canvas` package. 
@@ -189,6 +192,22 @@ The fifth paramter is the threshold that will be used by the threshold and bayer
             .image(img, 300, 300, 'atkinson')
             .encode()
     }
+
+## next
+
+Set printer to the next page.
+
+## left
+
+Set text align left.
+
+## center
+
+Set text align center.
+
+## right
+
+Set text align right.
 
 ## License
 

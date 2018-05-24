@@ -1,5 +1,5 @@
 {
-  "name": "esc-pos-encoder",
+  "name": "@hexing/esc-pos-encoder",
   "version": "1.0.0",
   "description": "Create a set of commands that can be send to any receipt printer that supports ESC/POS",
   "main": "src/esc-pos-encoder.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NielsLeenheer/EscPosEncoder.git"
+    "url": "git+https://github.com/Xing-He/EscPosEncoder.git"
   },
   "keywords": [
     "pos",
@@ -21,12 +21,12 @@
     "receipt",
     "printer"
   ],
-  "author": "Niels Leenheer",
+  "author": "xing.he",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NielsLeenheer/EscPosEncoder/issues"
+    "url": "https://github.com/Xing-He/EscPosEncoder/issues"
   },
-  "homepage": "https://github.com/NielsLeenheer/EscPosEncoder#readme",
+  "homepage": "https://github.com/Xing-He/EscPosEncoder#readme",
   "devDependencies": {
     "browserify": "^14.5.0",
     "eslint": "^4.11.0",
@@ -36,11 +36,6 @@
     "mocha": "^4.0.1"
   },
   "dependencies": {
-    "canvas-dither": "^1.0.0",
-    "canvas-flatten": "^1.0.0",
-    "buffer-to-uint8array": "^1.1.0",
-    "canvas": "^2.0.0-alpha.6",
-    "canvas-browserify": "^1.1.3",
     "iconv-lite": "^0.4.19",
     "linewrap": "^0.2.1"
   }
