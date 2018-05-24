@@ -1,6 +1,6 @@
 # esc-pos-encoder
 
-Based on [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder), add `Simplified Chinese` encode.
+Based on [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder), add `Simplified Chinese` encode.  
 基于[esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder)修改，添加了 `简体中文`编码。
 
 ## Usage
