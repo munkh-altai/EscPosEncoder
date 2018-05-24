@@ -6,7 +6,7 @@ Based on [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder), add 
 ## Usage
 
 ```shell
-    npm install @hexing/esc-pos-encoder --save
+    npm install @xinghe/esc-pos-encoder --save
 ```
 
 ```js
