@@ -16,9 +16,9 @@ let encoder = new EscPosEncoder();
 
 let result = encoder
     .initialize()
-    .text('The quick brown fox jumps over the lazy dog)
+    .text('The quick brown fox jumps over the lazy dog')
     .newline()
-    .line('我是一段中文)
+    .line('我是一段中文')
     .right()
     .qrcode('https://nielsleenheer.com')
     .next()
