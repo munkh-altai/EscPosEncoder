@@ -201,13 +201,37 @@ Set printer to the next page.
 
 Set text align left.
 
+```js
+let result = encoder
+    .initialize()
+    .left()
+    .line('align to the left ,i\'m default')
+    .encode();
+```
+
 ## center
 
 Set text align center.
 
+```js
+let result = encoder
+    .initialize()
+    .center()
+    .line('align to the center')
+    .encode();
+```
+
 ## right
 
 Set text align right.
+
+```js
+let result = encoder
+    .initialize()
+    .right()
+    .line('align to the right')
+    .encode();
+```
 
 ## License
 
