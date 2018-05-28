@@ -244,6 +244,13 @@ let result = encoder
     .encode();
 ```
 
+# Reference
+
+- [React Native BLE蓝牙通信](https://blog.csdn.net/withings/article/details/71378562)
+- [Android 蓝牙连接 ESC/POS 热敏打印机打印（ESC/POS指令篇）](https://www.jianshu.com/p/c0b6d1a4823b)
+- [某 ESC 中文指令手册_V4.2（只做参考）]()
+
+
 ## License
 
 MIT
