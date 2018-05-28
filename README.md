@@ -1,7 +1,7 @@
 # esc-pos-encoder
 
-Based on [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder), add `Simplified Chinese` encode.  
-基于[esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder)修改，添加了 `简体中文`编码。
+Based on [esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder), add `Simplified Chinese` `cp936` encode.  
+基于[esc-pos-encoder](https://github.com/NielsLeenheer/EscPosEncoder)修改，添加了 `简体中文` `cp936`编码。
 
 ## Usage
 
@@ -16,6 +16,7 @@ let encoder = new EscPosEncoder();
 
 let result = encoder
     .initialize()
+    .codepage('cp936')
     .text('The quick brown fox jumps over the lazy dog')
     .newline()
     .line('我是一段中文')
@@ -49,7 +50,7 @@ If you don't specify a code page, it will assume you want to print only ASCII ch
         .text('Iñtërnâtiônàlizætiøn')
         .encode()
 
-The following code pages are supported: cp437, cp737, cp850, cp775, cp852, cp855, cp857, cp858, cp860, cp861, cp862, cp863, cp864, cp865, cp866, cp869, cp1252, iso88596, windows1250, windows1251, windows1252, windows1253, windows1254, windows1255, windows1256, windows1257, windows1258.
+The following code pages are supported: `cp936`, cp437, cp737, cp850, cp775, cp852, cp855, cp857, cp858, cp860, cp861, cp862, cp863, cp864, cp865, cp866, cp869, cp1252, iso88596, windows1250, windows1251, windows1252, windows1253, windows1254, windows1255, windows1256, windows1257, windows1258.
 
 ### Text
 
