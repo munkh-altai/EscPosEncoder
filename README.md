@@ -198,6 +198,16 @@ The fifth paramter is the threshold that will be used by the threshold and bayer
 
 Set printer to the next page.
 
+```js
+let encoder = new EscPosEncoder();
+
+let result = encoder
+    .initialize()
+    .line('print and move to next page')
+    .next()
+    .encode();
+```
+
 ## left
 
 Set text align left.
